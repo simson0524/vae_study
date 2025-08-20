@@ -1,4 +1,4 @@
-# loss.py
+# src/loss.py
 
 import torch.nn.functional as F
 import torch

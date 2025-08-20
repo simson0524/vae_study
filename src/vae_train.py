@@ -1,4 +1,4 @@
-# vae_train.py
+# src/vae_train.py
 
 from loss import *
 from visualization import save_reconst, save_latent_scatter, save_manifold

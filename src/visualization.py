@@ -1,4 +1,4 @@
-# visualization.py
+# src/visualization.py
 
 from torchvision.utils import save_image, make_grid
 import matplotlib.pyplot as plt
