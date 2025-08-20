@@ -16,10 +16,10 @@ def vae_train(model, train_loader, test_loader, config, device="cuda"):
     out_dir = config['paths']['out_dir']
     os.makedirs(out_dir, exist_ok=True)
 
-    for epoch in tqdm(range(1, config['train']['epochs']+1), total=len(train_loader), desc=f"[EPOCH {epoch}] training..."):
+    for epoch in range(1, config['train']['epochs']+1):
         total = 0
         reconst_total = 0
-        for x, _ in train_loader:
+        for x, _ in tqdm(train_loader, total=len(train_loader), desc=f"[EPOCH {epoch}] Training..."):
             x = x.to(device)
             # forward
             reconst_x, mu, logvar, latent_z = model(x)
