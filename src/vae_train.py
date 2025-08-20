@@ -1,7 +1,6 @@
 # src/vae_train.py
 
-from loss import *
-from visualization import *
+from src.loss import reconst_loss, beta, kl_divergence
 from tqdm.auto import tqdm
 import torch
 import os
@@ -29,7 +28,7 @@ def vae_train(model, train_loader, test_loader, config, device="cuda"):
             beta_term = beta(config, epoch)
             kl_divergence_term = kl_divergence(mu, logvar)
             loss = reconst_loss_term + beta_term*kl_divergence_term
-            
+
             # backward
             optimizer.zero_grad()
             loss.backward()
@@ -37,23 +36,6 @@ def vae_train(model, train_loader, test_loader, config, device="cuda"):
 
             total += loss.item()
             reconst_total += reconst_loss_term.item()
-        
-        print(f"[{epoch}] loss={total/len(train_loader):.4f} (beta={beta_term:.2f})")
-        print(f"[{epoch}] reconst_loss={reconst_total/len(train_loader):.4f} (beta={beta_term:.2f})")
 
-        save_reconst(
-            model=model, 
-            loader=test_loader, 
-            out_dir=out_dir, 
-            n=config['visualization']['n_recon'], 
-            tag=config['model']['type']
-            )
-
-    if config['model']['latent_dim'] == 4:
-        save_latent_scatter(
-            model=model, 
-            loader=test_loader, 
-            out_dir=out_dir, 
-            tag=config['model']['type']
-            )
-        save_manifold(model, out_dir, grid_size=config['visualization']['grid_size'], lim=config['visualization']['lim'], tag=config['model']['type'])
+        print(f"[EPOCH {epoch}] loss={total/len(train_loader):.4f} (beta={beta_term:.2f})")
+        print(f"[EPOCH {epoch}] reconst_loss={reconst_total/len(train_loader):.4f} (beta={beta_term:.2f})\n")

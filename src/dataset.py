@@ -9,7 +9,7 @@ def get_loaders(root, name="MNIST", batch_size=128, num_workers=0):
     dataset = datasets.MNIST if name=="MNIST" else datasets.FashionMNIST
     train = dataset(root, train=True, download=True, transform=tfm)
     test  = dataset(root, train=False, download=True, transform=tfm)
-    
+
     train_loader= DataLoader(
         dataset=train,
         batch_size=batch_size,

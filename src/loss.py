@@ -19,13 +19,13 @@ def kl_divergence(mu, logvar):
 def beta(config, epoch):
     if config['beta_schedule']['type'] == 'linear':
         t = min(1.0, epoch/max(1, config['beta_schedule']['warmup_epochs']))
-        
+
         return 1.0 + t*(config['beta_schedule']['max_beta']-1.0)
-    
+
     elif config['beta_schedule']['type'] == 'cosine':
         T = max(1.0, config['beta_schedule']['warmup_epochs'])
         t = min(1.0, epoch / T)
-        
+
         return 1.0 + 0.5*(1-math.cos(math.pi * t))*(config['beta_schedule']['max_beta'] - 1.0)
-    
+
     return config['model']['beta']
