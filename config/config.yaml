@@ -1,0 +1,25 @@
+exp_name: "vae-mnist-2d"
+seed: 42
+device: "auto"             # "cuda"|"cpu"
+data:
+  name: "MNIST"            # "MNIST"|"FashionMNIST"
+  root: "./data"
+train:
+  batch_size: 64
+  epochs: 10
+  lr: 0.001
+  num_workers: 0           
+model:
+  type: "vae"              # "vae"|"ae"
+  latent_dim: 3
+  beta: 1.0                # β value for β-VAE
+beta_schedule:
+  type: "linear"             # "none"|"linear"|"cosine"
+  max_beta: 3.0
+  warmup_epochs: 5
+visualization:
+  grid_size: 15
+  lim: 3.0
+  n_recon: 32
+paths:
+  out_dir: "./outputs"
