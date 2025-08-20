@@ -157,11 +157,11 @@ def show_recon_grid_with_z(model, loader, device="cuda", num_images=16, title="O
     for i in range(n):
         axes[i, 0].imshow(to_numpy(x[i]))
         axes[i, 0].axis('off')
-        axes[i, 0].set_title(f"Orig {i}\nz : {latent_z[i]}")
+        axes[i, 0].set_title(f"Origin {i}\nz : {latent_z[i]}")
 
         axes[i, 1].imshow(to_numpy(rx[i]))
         axes[i, 1].axis('off')
-        axes[i, 1].set_title(f"Recon {i}")
+        axes[i, 1].set_title(f"Reconst {i}")
 
     plt.tight_layout()
     plt.show()
