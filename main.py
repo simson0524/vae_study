@@ -5,17 +5,20 @@ from src.dataset import get_loaders
 from src.model import ConvVAE, FlattenVAE
 from src.vae_train import vae_train
 import argparse
+import sys
+from pathlib import Path
 
-def parse_args():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--config", type=str, default="config/config.yaml")
-    
-    return ap.parse_args()
-
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="config/config.yaml")
+    args, _ = parser.parse_known_args(argv)
+    return args
 
 def main():
-    args = parse_args()
-    config = load_config(args.config)
+    args = parse_args(sys.argv[1:])
+    cfg_path = Path(args.config).expanduser().resolve()
+    config = load_config(str(cfg_path))
+
     set_seed(config['seed'])
 
     train_loader, test_loader = get_loaders(
@@ -27,7 +30,6 @@ def main():
 
     model = ConvVAE(latent_dim=config['model']['latent_dim'])
     vae_train(model, train_loader, test_loader, config)
-
 
 if __name__ == "__main__":
     main()
