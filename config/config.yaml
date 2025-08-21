@@ -2,7 +2,7 @@ exp_name: "vae-mnist-2d"
 seed: 42
 device: "cuda"             # "cuda"|"cpu"
 data:
-  name: "MNIST"            # "MNIST"|"FashionMNIST"
+  name: "MNIST"            # "MNIST"
   root: "./data"
 train:
   batch_size: 16
